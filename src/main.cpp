@@ -1,9 +1,3 @@
-// MD_fo_mol.cpp : コンソール アプリケーションのエントリ ポイントを定義します。
-//
-
-#include "stdafx.h"
-
-
 /*改変履歴
 2008/1/24	鈴木プログラムのRKGを使って、とりあえず完成。
 			変数名を整理して、構造化を進める。パラメータファイルの書式を変更。
@@ -19,16 +13,20 @@
 */ //改変履歴終わり
 
 
-//CoulombExplosionMomentum.cpp
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
+#define WIN32_LEAN_AND_MEAN  // Windows ヘッダーから使用されていない部分を除外します。
+
 #include <direct.h>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <tchar.h>
+#include <time.h>
+
 using namespace std;
 
 //#define CONST 138.6 
