@@ -13,9 +13,18 @@
 */ //改変履歴終わり
 
 
-#define WIN32_LEAN_AND_MEAN  // Windows ヘッダーから使用されていない部分を除外します。
-
-#include <direct.h>
+// TODO: Use std::filesystem::create_directories which is supported since c++17
+#ifdef _WIN32
+	#include <direct.h>  // for _mkdir
+#else
+	#include <sys/types.h>
+	#include <sys/stat.h>  // for mkdir
+#endif
+// TODO: Replace char[] to std::string
+#ifndef _WIN32
+	#define strcpy_s strcpy
+	#define strcat_s strcat
+#endif
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -24,11 +33,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include <tchar.h>
+#include <string.h>
 #include <time.h>
 
+// TODO: Do not use `using namespace std`
 using namespace std;
 
+// TODO: Reduce macros
+#ifdef _WIN32
+	#define JOIN "\\"
+#else
+	#define JOIN "/"
+#endif
 //#define CONST 138.6 
 //時間の単位は ps 長さの単位は nm エネルギーの単位は amu nm^2/ps^2
 //CONST=6.02*10^23*e^2/(4pi*e0)        鈴木定数
@@ -169,9 +185,13 @@ int i;
         i=i+1;
         if(i>31) {cout<<"Filename is too long. Be fewer 32 letters."<<endl;exit (1);}
 	} while(makingdirectory[i]!='.');
-    NewDir[i]=NULL;
+    NewDir[i] = '\0';
 	cout<<"simulation result -> "<<NewDir<<endl;
-    _mkdir(NewDir); //ディレクトリ作成完了
+	#ifdef _WIN32
+    	_mkdir(NewDir); //ディレクトリ作成完了
+	#else
+		mkdir(NewDir, 0755);
+	#endif
 
 
 }
@@ -187,12 +207,12 @@ int i,j;
         i=i+1;
         if(i>31) {cout<<"Filename is too long. Be fewer 32 letters."<<endl;exit (1);}
 	} while(makingdirectory[i]!='.');
-    DirName[i]=NULL;
+    DirName[i] = '\0';
 
 
          //シミュレーション条件の出力ファイルの作成
 		   strcpy_s(InfoFile,DirName);
-		   strcat_s(InfoFile,"\\Infomation.txt");
+		   strcat_s(InfoFile, JOIN "Infomation.txt");
 			foutinformation.open(InfoFile);
 				cout << InfoFile << endl;
 			if(!foutinformation) {cout<<" cannot make Infomation FILE. \n";}
@@ -218,8 +238,8 @@ int i,j;
 			for(i=0;i<num_label;i++){
 				strcpy_s(filename[2*i]  ,DirName);			// label i-th ion
 				strcpy_s(filename[2*i+1],DirName);			// label i-th neutral 
-				strcat_s(filename[2*i]  ,"\\");
-				strcat_s(filename[2*i+1],"\\");
+				strcat_s(filename[2*i]  ,JOIN);
+				strcat_s(filename[2*i+1],JOIN);
 				strcat_s(filename[2*i]  ,valid_label[i].c_str());
 				strcat_s(filename[2*i+1],valid_label[i].c_str());
 				strcat_s(filename[2*i]  ,"_P.dat");
@@ -238,7 +258,7 @@ int i,j;
 			for(i=0;i<num_label;i++){
 			for(j=i;j<num_label;j++){
 				strcpy_s(filename_2body[i][j]  ,DirName);			// label i-th ion
-				strcat_s(filename_2body[i][j]  ,"\\");
+				strcat_s(filename_2body[i][j]  ,JOIN);
 				strcat_s(filename_2body[i][j]  ,"2body_");
 				strcat_s(filename_2body[i][j]  ,valid_label[i].c_str());
 				strcat_s(filename_2body[i][j]  ,valid_label[j].c_str());
@@ -252,7 +272,7 @@ int i,j;
 
 			if(snap_num>0){
 				strcpy_s(SnapFile ,DirName);		
-				strcat_s(SnapFile,"\\Snapshot.dat");
+				strcat_s(SnapFile, JOIN "Snapshot.dat");
 				fsnapshot.open(SnapFile);
 				cout << SnapFile << endl;
 				if(!fsnapshot) {cout<<" cannot make Infomation FILE. \n";}
