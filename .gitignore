@@ -1,0 +1,9 @@
+_UpgradeReport_Files
+.vs
+.vscode
+*.old
+*.user
+Debug
+ipch
+Release
+UpgradeLog*.XML
