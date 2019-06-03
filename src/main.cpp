@@ -12,6 +12,7 @@
 #define strcat_s strcat
 #endif
 
+#include <algorithm>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -122,26 +123,26 @@ public:
 
 void denka::message() {
     cout << "usage: program.exe  parameterfile " << endl;
-    cout << " " << endl;
-    cout << "パラメータファイルの書式 " << endl;
-    cout << "１行目　　開始時間[ps]  終了時間[ps]  MDステップ数[整数]  スナップショット回数" << endl;
-    cout << "　　      数字の間はスペースで区切る。" << endl;
-    cout << "　　      スナップショット回数=0ならばスナップショットを出力しない。" << endl;
-    cout << " " << endl;
-    cout << "２行目　　全粒子数　全電価数  相互作用指定 電荷buld-up時間[ps] 電荷移動時間[ps] 電荷移動CTのフラグ(=1で個別)" << endl;
-    cout << "　　　　　全粒子数 > 全電価数。" << endl;
-    cout << "　　　　　電荷移動CTのフラグ: defaultはウラシルリング全体が同じレート。=1で個別)。" << endl;
-    cout << "　　　　　相互作用: default=C: Coulomb, L: LJ, M: C+LJ, N: C+LJ+Induced dipole " << endl;
-    cout << " " << endl;
-    cout << "３行目　　シミュレーションの試行回数" << endl;
-    cout << " " << endl;
-    cout << "４行目以降に初期原子データを書く " << endl;
-    cout << "書式 " << endl;
-    cout << "ラベル  質量[amu]  x[nm] y[nm] z[nm] vx[nm/ps] vy[nm/ps] vz[nm/ps] 初期電荷 最大電荷 電荷移動CTのフラグ" << endl;
-    cout << "ラベルは５文字以内。これに従って結果を分類する。 " << endl;
-    cout << "初期電荷を置いてシミュレーション。初期電荷は０以上の整数" << endl;
-    cout << "最大電荷まで粒子にランダムに電荷を分配する。 " << endl;
-    cout << "CTのフラグ：それぞれの原子の電荷移動時間をflag×電荷移動時間にするフラグ。 " << endl;
+    // cout << " " << endl;
+    // cout << "パラメータファイルの書式 " << endl;
+    // cout << "１行目　　開始時間[ps]  終了時間[ps]  MDステップ数[整数]  スナップショット回数" << endl;
+    // cout << "　　      数字の間はスペースで区切る。" << endl;
+    // cout << "　　      スナップショット回数=0ならばスナップショットを出力しない。" << endl;
+    // cout << " " << endl;
+    // cout << "２行目　　全粒子数　全電価数  相互作用指定 電荷buld-up時間[ps] 電荷移動時間[ps] 電荷移動CTのフラグ(=1で個別)" << endl;
+    // cout << "　　　　　全粒子数 > 全電価数。" << endl;
+    // cout << "　　　　　電荷移動CTのフラグ: defaultはウラシルリング全体が同じレート。=1で個別)。" << endl;
+    // cout << "　　　　　相互作用: default=C: Coulomb, L: LJ, M: C+LJ, N: C+LJ+Induced dipole " << endl;
+    // cout << " " << endl;
+    // cout << "３行目　　シミュレーションの試行回数" << endl;
+    // cout << " " << endl;
+    // cout << "４行目以降に初期原子データを書く " << endl;
+    // cout << "書式 " << endl;
+    // cout << "ラベル  質量[amu]  x[nm] y[nm] z[nm] vx[nm/ps] vy[nm/ps] vz[nm/ps] 初期電荷 最大電荷 電荷移動CTのフラグ" << endl;
+    // cout << "ラベルは５文字以内。これに従って結果を分類する。 " << endl;
+    // cout << "初期電荷を置いてシミュレーション。初期電荷は０以上の整数" << endl;
+    // cout << "最大電荷まで粒子にランダムに電荷を分配する。 " << endl;
+    // cout << "CTのフラグ：それぞれの原子の電荷移動時間をflag×電荷移動時間にするフラグ。 " << endl;
     exit(0);
 }
 
