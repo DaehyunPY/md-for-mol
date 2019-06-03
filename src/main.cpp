@@ -24,9 +24,6 @@
 #include <sstream>
 #include <string>
 
-// TODO: Do not use `using namespace std`
-using namespace std;
-
 // TODO: Reduce macros
 #ifdef _WIN32
 #define JOIN "\\"
@@ -68,9 +65,9 @@ private:
     int random_charge[MAX_NUM]{};         // 電荷をランダムに分配する原子の番号を入れておく
     int num_random_atom{};                // 電荷をランダムに分配する原子の数
     int num_fixed_atom{};                    // 初期データで電荷が確定されている原子の数
-    string label[MAX_NUM];              // label for identifying particles
+    std::string label[MAX_NUM];              // label for identifying particles
     int num_label{};                        // number of independent label
-    string valid_label[MAX_NUM];        // list of independent label
+    std::string valid_label[MAX_NUM];        // list of independent label
     long double t{}, t0{}, tn{};                // time
     int n_step{};                            //時間の刻み数
     long double interval_t{};                //時間の刻み巾 = (tn-t0)/n_step
@@ -80,14 +77,14 @@ private:
     long double minmomentum{};            //精度評価で使用。最小の運動量成分。　
     long double refenergy{};                // 精度評価で使用
     int snap_num{};                        // snapshot is took every snap_num step
-    ofstream foutinformation;            //情報ファイル名　fimename[i]にlabel番号iのファイル名　
+    std::ofstream foutinformation;            //情報ファイル名　fimename[i]にlabel番号iのファイル名　
     char InfoFile[32]{};                    //情報ファイルストリーム　
     char filename[MAX_LABEL * 2][32]{};        //出力ファイル名　fimename[i]にlabel番号iのファイル名　
-    ofstream outfile[MAX_LABEL * 2];        //出力ファイルストリーム outfile[i]にlabel番号iのファイル
+    std::ofstream outfile[MAX_LABEL * 2];        //出力ファイルストリーム outfile[i]にlabel番号iのファイル
     char filename_2body[MAX_LABEL][MAX_LABEL][32]{};        //出力ファイル名　fimename[i]にlabel番号iのファイル名　
-    ofstream outfile_2body[MAX_LABEL][MAX_LABEL];        //出力ファイルストリーム outfile[i]にlabel番号iのファイル
+    std::ofstream outfile_2body[MAX_LABEL][MAX_LABEL];        //出力ファイルストリーム outfile[i]にlabel番号iのファイル
     char SnapFile[32]{};                    //スナップショットファイル名　
-    ofstream fsnapshot;                    //スナップショット用ファイルストリーム　
+    std::ofstream fsnapshot;                    //スナップショット用ファイルストリーム　
     char pot_flag{};            //相互作用　default: C, C: Coulomb, L: Lenard-Jones, M: Coulomb+LJ, N: Coulomb + LJ + Induced dipole
     char pot_label[8]{};        //相互作用識別ラベル　C: Coulomb, L: Lenard-Jones, M: Coulomb+LJ, N: Coulomb + LJ + Induced dipole
 
@@ -123,27 +120,27 @@ public:
 };
 
 void denka::message() {
-    cout << "usage: program.exe  parameterfile " << endl;
-    // cout << " " << endl;
-    // cout << "パラメータファイルの書式 " << endl;
-    // cout << "１行目　　開始時間[ps]  終了時間[ps]  MDステップ数[整数]  スナップショット回数" << endl;
-    // cout << "　　      数字の間はスペースで区切る。" << endl;
-    // cout << "　　      スナップショット回数=0ならばスナップショットを出力しない。" << endl;
-    // cout << " " << endl;
-    // cout << "２行目　　全粒子数　全電価数  相互作用指定 電荷buld-up時間[ps] 電荷移動時間[ps] 電荷移動CTのフラグ(=1で個別)" << endl;
-    // cout << "　　　　　全粒子数 > 全電価数。" << endl;
-    // cout << "　　　　　電荷移動CTのフラグ: defaultはウラシルリング全体が同じレート。=1で個別)。" << endl;
-    // cout << "　　　　　相互作用: default=C: Coulomb, L: LJ, M: C+LJ, N: C+LJ+Induced dipole " << endl;
-    // cout << " " << endl;
-    // cout << "３行目　　シミュレーションの試行回数" << endl;
-    // cout << " " << endl;
-    // cout << "４行目以降に初期原子データを書く " << endl;
-    // cout << "書式 " << endl;
-    // cout << "ラベル  質量[amu]  x[nm] y[nm] z[nm] vx[nm/ps] vy[nm/ps] vz[nm/ps] 初期電荷 最大電荷 電荷移動CTのフラグ" << endl;
-    // cout << "ラベルは５文字以内。これに従って結果を分類する。 " << endl;
-    // cout << "初期電荷を置いてシミュレーション。初期電荷は０以上の整数" << endl;
-    // cout << "最大電荷まで粒子にランダムに電荷を分配する。 " << endl;
-    // cout << "CTのフラグ：それぞれの原子の電荷移動時間をflag×電荷移動時間にするフラグ。 " << endl;
+    std::cout << "usage: program.exe  parameterfile " << std::endl;
+    // std::cout << " " << std::endl;
+    // std::cout << "パラメータファイルの書式 " << std::endl;
+    // std::cout << "１行目　　開始時間[ps]  終了時間[ps]  MDステップ数[整数]  スナップショット回数" << std::endl;
+    // std::cout << "　　      数字の間はスペースで区切る。" << std::endl;
+    // std::cout << "　　      スナップショット回数=0ならばスナップショットを出力しない。" << std::endl;
+    // std::cout << " " << std::endl;
+    // std::cout << "２行目　　全粒子数　全電価数  相互作用指定 電荷buld-up時間[ps] 電荷移動時間[ps] 電荷移動CTのフラグ(=1で個別)" << std::endl;
+    // std::cout << "　　　　　全粒子数 > 全電価数。" << std::endl;
+    // std::cout << "　　　　　電荷移動CTのフラグ: defaultはウラシルリング全体が同じレート。=1で個別)。" << std::endl;
+    // std::cout << "　　　　　相互作用: default=C: Coulomb, L: LJ, M: C+LJ, N: C+LJ+Induced dipole " << std::endl;
+    // std::cout << " " << std::endl;
+    // std::cout << "３行目　　シミュレーションの試行回数" << std::endl;
+    // std::cout << " " << std::endl;
+    // std::cout << "４行目以降に初期原子データを書く " << std::endl;
+    // std::cout << "書式 " << std::endl;
+    // std::cout << "ラベル  質量[amu]  x[nm] y[nm] z[nm] vx[nm/ps] vy[nm/ps] vz[nm/ps] 初期電荷 最大電荷 電荷移動CTのフラグ" << std::endl;
+    // std::cout << "ラベルは５文字以内。これに従って結果を分類する。 " << std::endl;
+    // std::cout << "初期電荷を置いてシミュレーション。初期電荷は０以上の整数" << std::endl;
+    // std::cout << "最大電荷まで粒子にランダムに電荷を分配する。 " << std::endl;
+    // std::cout << "CTのフラグ：それぞれの原子の電荷移動時間をflag×電荷移動時間にするフラグ。 " << std::endl;
     exit(0);
 }
 
@@ -155,12 +152,12 @@ void denka::mk_out_dir(const char *makingdirectory) {
         NewDir[i] = makingdirectory[i];
         i = i + 1;
         if (i > 31) {
-            cout << "Filename is too long. Be fewer 32 letters." << endl;
+            std::cout << "Filename is too long. Be fewer 32 letters." << std::endl;
             exit(1);
         }
     } while (makingdirectory[i] != '.');
     NewDir[i] = '\0';
-    cout << "simulation result -> " << NewDir << endl;
+    std::cout << "simulation result -> " << NewDir << std::endl;
 #ifdef _WIN32
     _mkdir(NewDir); //ディレクトリ作成完了
 #else
@@ -178,7 +175,7 @@ void denka::open_output_files(const char *makingdirectory) {
         DirName[i] = makingdirectory[i];
         i = i + 1;
         if (i > 31) {
-            cout << "Filename is too long. Be fewer 32 letters." << endl;
+            std::cout << "Filename is too long. Be fewer 32 letters." << std::endl;
             exit(1);
         }
     } while (makingdirectory[i] != '.');
@@ -188,23 +185,23 @@ void denka::open_output_files(const char *makingdirectory) {
     strcpy_s(InfoFile, DirName);
     strcat_s(InfoFile, JOIN "Infomation.txt");
     foutinformation.open(InfoFile);
-    cout << InfoFile << endl;
-    if (!foutinformation) { cout << " cannot make Infomation FILE. \n"; }
-    foutinformation << "START TIME T0 " << t0 << " ps" << endl;
-    foutinformation << "STOP TIME Tn " << tn << " ps" << endl;
-    foutinformation << "kizami n " << n_step << endl;
-    foutinformation << "trial number " << trial << endl;
-    foutinformation << "Number of simulated particles is " << PN << endl;
-    foutinformation << "Number of charge is " << CN << endl;
-    foutinformation << "Interaction : " << pot_label << endl;
-    foutinformation << "Charge buld-up time [ps] : " << t_charge_bu << endl;
-    foutinformation << "New directory name is " << DirName << endl;
-    foutinformation << "N" << DirName << endl;
-    foutinformation << endl;
-    foutinformation << endl;
-    foutinformation << endl;
+    std::cout << InfoFile << std::endl;
+    if (!foutinformation) { std::cout << " cannot make Infomation FILE. \n"; }
+    foutinformation << "START TIME T0 " << t0 << " ps" << std::endl;
+    foutinformation << "STOP TIME Tn " << tn << " ps" << std::endl;
+    foutinformation << "kizami n " << n_step << std::endl;
+    foutinformation << "trial number " << trial << std::endl;
+    foutinformation << "Number of simulated particles is " << PN << std::endl;
+    foutinformation << "Number of charge is " << CN << std::endl;
+    foutinformation << "Interaction : " << pot_label << std::endl;
+    foutinformation << "Charge buld-up time [ps] : " << t_charge_bu << std::endl;
+    foutinformation << "New directory name is " << DirName << std::endl;
+    foutinformation << "N" << DirName << std::endl;
+    foutinformation << std::endl;
+    foutinformation << std::endl;
+    foutinformation << std::endl;
     //ファイルを開く、"label"P.dat (ion) labelN.dat (neutral) など
-    if (MAX_LABEL < num_label) { cout << "too much labels! " << endl; }
+    if (MAX_LABEL < num_label) { std::cout << "too much labels! " << std::endl; }
     for (i = 0; i < num_label; i++) {
         strcpy_s(filename[2 * i], DirName); // label i-th ion
         strcpy_s(filename[2 * i + 1], DirName); // label i-th neutral
@@ -216,9 +213,9 @@ void denka::open_output_files(const char *makingdirectory) {
         strcat_s(filename[2 * i + 1], "_N.dat"); // label i-th neutral
         //ファイル作成
         outfile[2 * i].open(filename[2 * i]);
-        if (!outfile[2 * i]) { cout << "cannot make \n "; }
+        if (!outfile[2 * i]) { std::cout << "cannot make \n "; }
         outfile[2 * i + 1].open(filename[2 * i + 1]);
-        if (!outfile[2 * i + 1]) { cout << "cannot make \n "; }
+        if (!outfile[2 * i + 1]) { std::cout << "cannot make \n "; }
     }
     for (i = 0; i < num_label; i++) {
         for (j = i; j < num_label; j++) {
@@ -230,7 +227,7 @@ void denka::open_output_files(const char *makingdirectory) {
             strcat_s(filename_2body[i][j], ".dat");
             //ファイル作成
             outfile_2body[i][j].open(filename_2body[i][j]);
-            if (!outfile_2body[i][j]) { cout << "cannot make \n "; }
+            if (!outfile_2body[i][j]) { std::cout << "cannot make \n "; }
         }
     }
 
@@ -238,8 +235,8 @@ void denka::open_output_files(const char *makingdirectory) {
         strcpy_s(SnapFile, DirName);
         strcat_s(SnapFile, JOIN "Snapshot.json");
         fsnapshot.open(SnapFile);
-        cout << SnapFile << endl;
-        if (!fsnapshot) { cout << " cannot make Infomation FILE. \n"; }
+        std::cout << SnapFile << std::endl;
+        if (!fsnapshot) { std::cout << " cannot make Infomation FILE. \n"; }
     }
 }
 
@@ -266,16 +263,16 @@ void denka::keisan(int n_th) {
     long double exp_chg;
     int file_num = 0;
 
-    cout << "you entered... " << endl;
-    cout << "START TIME T0 " << t0 << " ps" << endl;
-    cout << "STOP TIME Tn " << tn << " ps" << endl;
-    cout << "kizami n " << n_step << endl;
-    cout << "trial number " << trial << endl;
-    cout << "Number of simulated particles is " << PN << endl;
-    cout << "Number of total charge is " << CN << endl;
+    std::cout << "you entered... " << std::endl;
+    std::cout << "START TIME T0 " << t0 << " ps" << std::endl;
+    std::cout << "STOP TIME Tn " << tn << " ps" << std::endl;
+    std::cout << "kizami n " << n_step << std::endl;
+    std::cout << "trial number " << trial << std::endl;
+    std::cout << "Number of simulated particles is " << PN << std::endl;
+    std::cout << "Number of total charge is " << CN << std::endl;
     cal_momentum();
-    cout << "initial total momentum of system : [amu nm/ps]" << endl <<
-         "px=" << px << " py=" << py << " pz=" << pz << endl;
+    std::cout << "initial total momentum of system : [amu nm/ps]" << std::endl <<
+         "px=" << px << " py=" << py << " pz=" << pz << std::endl;
     //初期の全運動量を計算し出力する
 
     if (t_charge_bu == 0) {
@@ -292,12 +289,12 @@ void denka::keisan(int n_th) {
         }
     }
 
-    cout << "initial potential energy  " << (AMU * 1e6 / UNIT_E) * potential_energy() << "  eV" << endl;
+    std::cout << "initial potential energy  " << (AMU * 1e6 / UNIT_E) * potential_energy() << "  eV" << std::endl;
     //最後に [amu nm^2/ps^2] --> [eV]　へ変換
-    cout << "initial kinetic energy  " << (AMU * 1e6 / UNIT_E) * kinetic_energy() << "  eV" << endl;
+    std::cout << "initial kinetic energy  " << (AMU * 1e6 / UNIT_E) * kinetic_energy() << "  eV" << std::endl;
     //最後に [amu nm^2/ps^2] --> [eV]　へ変換
     initialenergy = PE_plus_KE();  ////単位は [amu nm^2/ps^2]
-    cout << "initial total energy  " << (AMU * 1e6 / UNIT_E) * initialenergy << "  eV" << endl;
+    std::cout << "initial total energy  " << (AMU * 1e6 / UNIT_E) * initialenergy << "  eV" << std::endl;
     //最後に [amu nm^2/ps^2] --> [eV]　へ変換
 
     //main loop.時間の刻みだけのSTEPがある
@@ -324,7 +321,7 @@ void denka::keisan(int n_th) {
         } else if (CT_para == 97) {
             exp_chg = (1 - exp(-1 * t / t_charge_bu));
             charge_next[1] = exp_chg * CN / 2;
-            // cout << charge[1] << endl;
+            // std::cout << charge[1] << std::endl;
             charge_next[2] = exp_chg * CN / 2;
             for (k = 0; k != 1 && k != 2; k++)
                 // charges float from two ct centers
@@ -365,7 +362,7 @@ void denka::keisan(int n_th) {
 
             if (charge[2] >= charge_dest[2]) {
                 charge_next[1] = exp_chg * CN - charge_dest[2];
-                // cout << charge[1] << endl;
+                // std::cout << charge[1] << std::endl;
                 charge_next[2] = charge_dest[2];
 
                 for (k = 0; k != 1 && k != 2; k++)
@@ -392,7 +389,7 @@ void denka::keisan(int n_th) {
                 }
             } else {
                 charge_next[1] = exp_chg * CN / 2;
-                // cout << charge[1] << endl;
+                // std::cout << charge[1] << std::endl;
                 charge_next[2] = exp_chg * CN / 2;
                 for (k = 0; k != 1 && k != 2; k++)
                     // charges float from two ct centers
@@ -437,7 +434,7 @@ void denka::keisan(int n_th) {
 
             if (charge[2] >= charge_dest[2]) {
                 charge_next[1] = exp_chg * CN - charge_dest[2];
-                // cout << charge[1] << endl;
+                // std::cout << charge[1] << std::endl;
                 charge_next[2] = charge_dest[2];
 
                 for (k = 0; k != 1 && k != 2; k++)
@@ -465,7 +462,7 @@ void denka::keisan(int n_th) {
                 }
             } else {
                 charge_next[1] = exp_chg * CN / 2;
-                // cout << charge[1] << endl;
+                // std::cout << charge[1] << std::endl;
                 charge_next[2] = exp_chg * CN / 2;
                 for (k = 0; k != 1 && k != 2; k++)
                     // charges float from two ct centers
@@ -621,20 +618,20 @@ void denka::keisan(int n_th) {
     }
 
     cal_momentum();
-    cout << "total momentum / [amu nm/ps]" << endl <<
-         "px=" << px << " py=" << py << " pz=" << pz << endl;
-    cout << "final potential energy  " << (AMU * 1e6 / UNIT_E) * potential_energy() << "  eV"
-         << endl;  //最後に [amu nm^2/ps^2] --> [eV]　へ変換
-    cout << "final kinetic energy  " << (AMU * 1e6 / UNIT_E) * kinetic_energy() << "  eV" << endl;
-    cout << "final kinetic energy 3body " << (AMU * 1e6 / UNIT_E) * kinetic_energy_3body() << "  eV" << endl;
-    cout << "final charges" << charge[0] << "  eV" << endl;
-    cout << "final charges" << charge[1] << "  eV" << endl;
-    cout << "final charges" << charge[2] << "  eV" << endl;
-    cout << "final charges" << charge[3] << "  eV" << endl;
-    cout << "final charges" << charge[4] << "  eV" << endl;
+    std::cout << "total momentum / [amu nm/ps]" << std::endl <<
+         "px=" << px << " py=" << py << " pz=" << pz << std::endl;
+    std::cout << "final potential energy  " << (AMU * 1e6 / UNIT_E) * potential_energy() << "  eV"
+         << std::endl;  //最後に [amu nm^2/ps^2] --> [eV]　へ変換
+    std::cout << "final kinetic energy  " << (AMU * 1e6 / UNIT_E) * kinetic_energy() << "  eV" << std::endl;
+    std::cout << "final kinetic energy 3body " << (AMU * 1e6 / UNIT_E) * kinetic_energy_3body() << "  eV" << std::endl;
+    std::cout << "final charges" << charge[0] << "  eV" << std::endl;
+    std::cout << "final charges" << charge[1] << "  eV" << std::endl;
+    std::cout << "final charges" << charge[2] << "  eV" << std::endl;
+    std::cout << "final charges" << charge[3] << "  eV" << std::endl;
+    std::cout << "final charges" << charge[4] << "  eV" << std::endl;
     finalenergy = PE_plus_KE();  ////単位は [amu nm^2/ps^2]
-    cout << "final total energy  " << (AMU * 1e6 / UNIT_E) * finalenergy << "  eV"
-         << endl;  //最後に [amu nm^2/ps^2] --> [eV]　へ変換
+    std::cout << "final total energy  " << (AMU * 1e6 / UNIT_E) * finalenergy << "  eV"
+         << std::endl;  //最後に [amu nm^2/ps^2] --> [eV]　へ変換
 
     if (refenergy < (fabs((finalenergy - initialenergy) / finalenergy))) {
         refenergy = (fabs((finalenergy - initialenergy) / finalenergy));
@@ -644,26 +641,26 @@ void denka::keisan(int n_th) {
     {
         refmomentum = fabs(kyori(px, initialP[0], py, initialP[1], pz, initialP[2]) / minmomentum);
     }
-    cout << " seido (initial total momentum-final total momentum)/(minmomentum) " << refmomentum << endl;
-    cout << " seido max(initial-final/final)energy = " << refenergy << endl;
-    foutinformation << endl;
-    foutinformation << "momentum seido " << refmomentum << endl;
-    foutinformation << "energy seido   " << refenergy << endl;
+    std::cout << " seido (initial total momentum-final total momentum)/(minmomentum) " << refmomentum << std::endl;
+    std::cout << " seido max(initial-final/final)energy = " << refenergy << std::endl;
+    foutinformation << std::endl;
+    foutinformation << "momentum seido " << refmomentum << std::endl;
+    foutinformation << "energy seido   " << refenergy << std::endl;
     //labelに従って結果をファイルに出力する
     for (i = 0; i < PN; i++) {
         if (charge_dest[i] == 0) {
             for (j = 0; j < num_label; j++) { if (label[i] == valid_label[j]) { file_num = 2 * j + 1; }; }
-            //						cout << charge_dest[i] << " " << label[i] << " " << filename[file_num] << endl;
+            //						std::cout << charge_dest[i] << " " << label[i] << " " << filename[file_num] << std::endl;
         }
         if (charge_dest[i] > 0) {
             for (j = 0; j < num_label; j++) { if (label[i] == valid_label[j]) { file_num = 2 * j; }; }
-            //						cout << charge_dest[i] << " " << label[i] << " " << filename[file_num] << endl;
+            //						std::cout << charge_dest[i] << " " << label[i] << " " << filename[file_num] << std::endl;
         }
 
         outfile[file_num] << n_th << " " << charge_dest[i] << " " << ev[i] << " " << momentum[i][0] << " "
-                          << momentum[i][1] << " " << momentum[i][2] << " " << "0" << endl;
+                          << momentum[i][1] << " " << momentum[i][2] << " " << "0" << std::endl;
         foutinformation << n_th << " " << label[i] << " " << charge_dest[i] << " " << ev[i] << " " << momentum[i][0]
-                        << " " << momentum[i][1] << " " << momentum[i][2] << " " << "0" << endl;
+                        << " " << momentum[i][1] << " " << momentum[i][2] << " " << "0" << std::endl;
 
 
         if (charge_dest[i] > 0) {
@@ -688,7 +685,7 @@ void denka::keisan(int n_th) {
                                    sqrt((Vx1 * Vx1 + Vy1 * Vy1 + Vz1 * Vz1) * (Vx2 * Vx2 + Vy2 * Vy2 + Vz2 * Vz2));
                     outfile_2body[suffix_1][suffix_2] << n_th << " " << label[i] << " " << charge_dest[i] << " "
                                                       << label[j] << " " << charge_dest[j] << " " << InnerProduct << " "
-                                                      << ev[i] << " " << ev[j] << " " << endl;
+                                                      << ev[i] << " " << ev[j] << " " << std::endl;
                 }
             }
         }
@@ -978,10 +975,10 @@ void denka::dist_charge() {
         max_charge = max_charge + Q_limit[i];
         fixed_charge = fixed_charge + charge_dest[i];
         // for debug
-        // cout << max_charge << endl;
+        // std::cout << max_charge << std::endl;
     }
     if (CN > max_charge) {
-        cout << " charge number mismatch" << endl;
+        std::cout << " charge number mismatch" << std::endl;
         exit(0);
     }
     for (i = 0; i < (CN - fixed_charge); i++)
@@ -1166,16 +1163,16 @@ long double denka::kinetic_energy_3body() {
 int denka::get_data(char *input_file) {
     char buf[512];
     int i, j, k, LINE_NUM, flag;
-    ifstream fin(input_file);
+    std::ifstream fin(input_file);
     if (!fin) {
-        cout << "cannot open \n ";
+        std::cout << "cannot open \n ";
         return 1;
     }
     LINE_NUM = 0;
     while (fin.getline(buf, sizeof(buf))) {
         LINE_NUM = LINE_NUM + 1;
-        // cout << buf << endl;
-        istringstream is(buf);
+        // std::cout << buf << std::endl;
+        std::istringstream is(buf);
         if (LINE_NUM == 1) { is >> t0 >> tn >> n_step >> snap_num; }
         if (LINE_NUM == 2) { is >> PN >> CN >> pot_flag >> t_charge_bu >> t_CT >> CT_para; }
         if (LINE_NUM == 3) { is >> trial; }
@@ -1228,15 +1225,15 @@ int denka::get_data(char *input_file) {
             num_label = num_label + 1;
         }
     } //  labelの数と、重複しないラベルをチェック
-    cout << LINE_NUM - 3 << " particle's data. " << PN << " particles are valid." << endl;
+    std::cout << LINE_NUM - 3 << " particle's data. " << PN << " particles are valid." << std::endl;
     return 0;
 }
 
 
 int main(int argc, char *argv[]) {
     int i; //simulation試行回数のカウンター
-    cout << "********************************PROGRAM START********************************" << endl;
-    cout << "length:nm,time:ps,energy:eV" << endl;
+    std::cout << "********************************PROGRAM START********************************" << std::endl;
+    std::cout << "length:nm,time:ps,energy:eV" << std::endl;
 
     denka sim_data;                //class 生成
     if (argv[1] == nullptr) { sim_data.message(); }
@@ -1248,7 +1245,7 @@ int main(int argc, char *argv[]) {
 
     for (i = 0; i < sim_data.trial; i++) {
         sim_data.get_data(argv[1]);    //初期データ取得,電荷分配し直し
-        cout << "******" << i + 1 << "th simulation" << "****************************************************" << endl;
+        std::cout << "******" << i + 1 << "th simulation" << "****************************************************" << std::endl;
         sim_data.dist_charge();       //電荷をランダムに分配。
         sim_data.keisan(i + 1);       //ｎstepのシミュレーションをRunge-Kutta-Gillで解く
     }
