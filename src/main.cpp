@@ -303,11 +303,11 @@ void denka::keisan(int n_th) {
 
         if (CT_para == 99) {
             exp_chg = 1 - exp(-1 * t / t_charge_bu);
-            charge[0] = charge_dest[0] * exp_chg;
-            charge[1] = charge_dest[1] * exp_chg;
-            charge[2] = std::min(charge_dest[1] * exp_chg, (long double) charge_dest[2]);
-            charge[3] = charge_dest[3] * exp_chg;
-            charge[4] = charge_dest[4] * exp_chg;
+            charge_next[0] = charge_dest[0] * exp_chg;
+            charge_next[1] = charge_dest[1] * exp_chg;
+            charge_next[2] = std::min(charge_dest[1] * exp_chg, (long double) charge_dest[2]);
+            charge_next[3] = charge_dest[3] * exp_chg;
+            charge_next[4] = charge_dest[4] * exp_chg;
         } else if (CT_para == 98) {
             exp_chg = (1 - exp(-1 * t / t_charge_bu));
             charge[0] = charge_dest[0] * exp_chg;
@@ -542,7 +542,7 @@ void denka::keisan(int n_th) {
             exp_chg = (1 - exp(-1 * t / t_charge_bu));
             //解析式で、charge build-up のみ。 動作OK
             if (t_CT == 0) {
-                for (k = 0; k < PN; k++) { charge[k] = charge_dest[k] * exp_chg; }
+                for (k = 0; k < PN; k++) { charge_next[k] = charge_dest[k] * exp_chg; }
                 // 差分式で、charge build-up のみ。 動作OK
                 // for(k=0;k<PN;k++){
                 // charge_next[k] = charge[k] + (dt_temp - pow(dt_temp, 2)/2
