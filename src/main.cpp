@@ -532,6 +532,15 @@ void denka::keisan(int n_th) {
             }
             charge_next[1] = (charge_total - charge_moved) * charge_dest[1] / (charge_dest[1] + charge_dest[2]);
             charge_next[2] = (charge_total - charge_moved) * charge_dest[2] / (charge_dest[1] + charge_dest[2]);
+        } else if (CT_para == 91) {
+            // Assume index 1 and 2 are parents of the charge transfer.
+            exp_chg = 1 - exp(-1 * t / t_charge_bu);
+            charge_next[0] = charge_dest[0] * exp_chg;
+            long double charge_parents = (charge_dest[1] + charge_dest[2]) * exp_chg;
+            charge_next[2] = std::min(charge_parents / 2, (long double) charge_dest[2]);
+            charge_next[1] = charge_parents - charge_next[2];
+            charge_next[3] = charge_dest[3] * exp_chg;
+            charge_next[4] = charge_dest[4] * exp_chg;
         } else if (t_charge_bu == 0) {
             charge[0] = charge_dest[0];
             charge[1] = charge_dest[1];
