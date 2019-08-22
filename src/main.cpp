@@ -516,7 +516,27 @@ void denka::keisan(int n_th) {
             }
             charge_next[2] = std::min((charge_total - charge_moved) / 2, (long double) charge_dest[2]);
             charge_next[1] = charge_total - charge_moved - charge_next[2];
-        } else if (CT_para == 92) {
+        }
+		else if (CT_para == 94) {
+			// model 93, give carbon a higher charge
+			// by changing the charge transger rate function
+			// Assume index 1 and 2 are parents of the charge transfer.
+			exp_chg = 1 - exp(-1 * t / t_charge_bu);
+			long double charge_total = exp_chg * CN;
+			long double charge_dmoved = (charge[1] + charge[2]) * interval_t / t_CT;
+			charge_moved = 0;
+			for (k = 0; k < PN; k++) {
+				if (k == 1 || k == 2)
+					continue;
+				charge_next[k] = std::min(
+					charge[k] + charge_dmoved * charge_dest[k] / (CN - charge_dest[1] - charge_dest[2]),
+					(long double)charge_dest[k]);
+				charge_moved += charge_next[k];
+			}
+			charge_next[2] = std::min((charge_total - charge_moved) / 6, (long double)charge_dest[2]);
+			charge_next[1] = charge_total - charge_moved - charge_next[2];
+		}
+		else if (CT_para == 92) {
             // Assume index 1 and 2 are parents of the charge transfer.
             exp_chg = 1 - exp(-1 * t / t_charge_bu);
             long double charge_total = exp_chg * CN;
